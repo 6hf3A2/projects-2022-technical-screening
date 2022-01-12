@@ -34,7 +34,7 @@ def is_unlocked(courses_list, target_course):
     """
     
     # TODO: COMPLETE THIS FUNCTION!!!
-    
+    print(courses_list, target_course)
     return True
 
 
