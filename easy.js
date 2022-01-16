@@ -31,9 +31,13 @@ var assert = require("assert")
 // Explanation: Empty array...
 
 const altNumbers = (numArray) => {
+
+    // case1: empty array given
     if (numArray == []) {
         return [];
     }
+
+    // count the number of positive int and negative int
     var count_positive = 0;
     var count_negative = 0;
     for (var i = 0; i < numArray.length; i++) {
@@ -44,18 +48,25 @@ const altNumbers = (numArray) => {
         }
     }
 
+    // create an array of size of given array
+    // set the element all to 0
     var total = count_positive + count_negative;
     var return_array = Array(total).fill(0);
+
+    // index of positive and negative number in new array
     var count1 = 0;
     var count2 = 1;
-    if (count_positive > count_negative) {
 
+    // case2: array start with positive number or start with negative number
+    if (count_positive > count_negative) {
         for (var i = 0; i < return_array.length; i++) {
             if (numArray[i] >= 0) {
                 return_array[count1] = numArray[i]
+                // increase the index by 2
                 count1 += 2
             } else {
                 return_array[count2] = numArray[i]
+                // increase the index by 2
                 count2 += 2
             }
         }
@@ -63,15 +74,18 @@ const altNumbers = (numArray) => {
         for (var i = 0; i < return_array.length; i++) {
             if (numArray[i] >= 0) {
                 return_array[count2] = numArray[i]
+                // increase the index by 2
                 count2 += 2
             } else {
                 return_array[count1] = numArray[i]
+                // increase the index by 2
                 count1 += 2
             }
         }
     }
     return return_array
 }
+
 
 module.exports = { altNumbers } // Do not modify this line
 
