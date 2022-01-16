@@ -61,7 +61,7 @@ def destruct(pre, courses_list):
             return False
     
     if "UNITS" in pre and "(" not in pre:
-        if "COMP" in pre:
+        if "COMP" in pre and "COMPLETION" not in pre:
             if "LEVEL" in pre:
 
                 level = int(pre[pre.index("LEVEL") + 5 : pre.index("LEVEL") + 8])
@@ -78,7 +78,10 @@ def destruct(pre, courses_list):
                     return False
             else:
                 check_string = "COMP"
-                num_course = int(pre[pre.index("UNITS") - 4:pre.index("UNITS")])
+                if pre.index("UNITS") <= 5:
+                    num_course = int(pre[0:pre.index("UNITS")])
+                else:
+                    num_course = int(pre[pre.index("UNITS") - 4:pre.index("UNITS")])
                 num_course = num_course / 6
                 count = 0
                 for course in courses_list:
@@ -91,6 +94,7 @@ def destruct(pre, courses_list):
         else:
                 num_course = int(pre[pre.index("UNITS") - 4:pre.index("UNITS")])
                 num_course = num_course / 6
+                print(courses_list, len(courses_list))
                 if len(courses_list) >= num_course:
                     return True
                 else: 
@@ -115,6 +119,7 @@ def destruct(pre, courses_list):
 
     # open the brackets
     elif "(" in pre:
+        pre = pre.lstrip()
         if pre.index("(") == 0 and pre[-1] == ")" and pre.count(")") == 1:
             destruct(pre[1:-1], courses_list)
         elif pre.index("(") == 0:
@@ -165,7 +170,6 @@ def is_unlocked(courses_list, target_course):
     You can assume all courses are worth 6 units of credit
     """
     
-    # TODO: COMPLETE THIS FUNCTION!!!
     
     # get the presequite for the target course
     pre = CONDITIONS[target_course]
@@ -178,15 +182,9 @@ def is_unlocked(courses_list, target_course):
         return False
     elif pre.isdigit():
         for course in courses_list:
-            if pre in course:
+            if pre in course and "COMP" in course:
                 return True
         return False
     
     return destruct(pre, courses_list)
 
-
-
-
-
-
-    
